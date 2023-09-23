@@ -1,5 +1,6 @@
 'use client';
 
+import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -71,7 +72,23 @@ export const InitialModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
-              <div className="flex items-center justify-center text-center">Todo: Image upload</div>
+              <div className="flex items-center justify-center text-center">
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}
@@ -83,9 +100,9 @@ export const InitialModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        {...field}
                         disabled={isLoading}
                         placeholder="Enter server name"
-                        {...field}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                       />
                     </FormControl>
